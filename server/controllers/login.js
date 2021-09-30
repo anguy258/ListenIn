@@ -3,6 +3,8 @@ require('../database/database').connect()
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 
+var session;
+
 exports.register = async (req, res) => {
     try {
         const {first_name, last_name, email, password} = req.body
@@ -41,9 +43,9 @@ exports.login = async (req, res) => {
 
         const user = await User.findOne({email})
         if (user && (await bcrypt.compare(password, user.password))) {
-            // session = req.sesssion
-            // session.userid = req.body.email
-            // console.log(session)
+            session = req.session
+            session.userid = req.body.email
+            console.log(session)
             res.status(200).send('LOGGED IN')
         }
         res.status(400).send("Invalid Credentials")
