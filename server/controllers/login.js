@@ -10,6 +10,7 @@ exports.register = async (req, res) => {
         const {first_name, last_name, email, password} = req.body
         
         if (!(first_name && last_name && email && password)) {
+            console.log(req.body)
             return res.status(400).send("Invalid Input(s)")
         }
 
@@ -26,7 +27,7 @@ exports.register = async (req, res) => {
             password: encrypted_pw,
         })
 
-        res.status(201).json(user)
+        return res.status(201).json(user)
     }
     catch(err) {
         console.log(err)
@@ -46,11 +47,16 @@ exports.login = async (req, res) => {
             session = req.session
             session.userid = req.body.email
             console.log(session)
-            res.status(200).send('LOGGED IN')
+            return res.status(200).send('LOGGED IN')
         }
-        res.status(400).send("Invalid Credentials")
+        return res.status(400).send("Invalid Credentials")
     }
     catch (err) {
         console.log(err)
     }
+}
+
+exports.logout = (req, res) => {
+    req.session.destroy()
+    res.redirect('/')
 }
