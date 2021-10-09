@@ -46,8 +46,9 @@ exports.login = async (req, res) => {
         if (user && (await bcrypt.compare(password, user.password))) {
             session = req.session
             session.userid = req.body.email
-            console.log(session)
-            return res.status(200).send('LOGGED IN')
+            //console.log(req.body)
+            //return res.status(200).send('LOGGED IN')
+            return res.json({user})
         }
         return res.status(400).send("Invalid Credentials")
     }

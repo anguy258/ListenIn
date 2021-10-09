@@ -8,6 +8,10 @@
     --border-radius: 8px;
 }
 
+.App {
+    background-color: var(--bg-accent);
+}
+
 ul {
     list-style: none;
     margin: 0;
